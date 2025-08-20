@@ -4,19 +4,28 @@
       class="bg-elevated/25" :ui="{ footer: 'lg:border-t lg:border-default' }">
       
       <template #header="{ collapsed }">
-        <div class="flex items-center gap-3 p-4">
-          <div class="w-8 h-8 bg-primary-600 rounded flex items-center justify-center">
-            <span class="text-white font-bold text-sm">D</span>
+        <div v-if="!collapsed" class="flex items-center justify-between px-4 py-4">
+          <div class="flex items-center gap-3 flex-1 min-w-0">
+            <div class="w-8 h-8 bg-primary-600 rounded flex items-center justify-center">
+              <span class="text-white font-bold text-sm">D</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-semibold text-sm">Dashboard</span>
+              <span class="text-xs text-muted-foreground">Admin Panel</span>
+            </div>
           </div>
-          <div v-if="!collapsed" class="flex flex-col">
-            <span class="font-semibold text-sm">Dashboard</span>
-            <span class="text-xs text-muted-foreground">Admin Panel</span>
+          <div class="flex-shrink-0 ml-2">
+            <UDashboardSidebarCollapse />
           </div>
+        </div>
+        
+        <!-- Collapsed state: center the collapse button -->
+        <div v-else class="flex items-center justify-center w-full py-4">
+          <UDashboardSidebarCollapse />
         </div>
       </template>
 
       <template #default="{ collapsed }">
-        <UDashboardSidebarCollapse />
         
         <!-- Loading durumu -->
         <div v-if="pending" class="flex items-center justify-center p-4">
@@ -37,7 +46,7 @@
       </template>
     </UDashboardSidebar>
 
-    <UDashboardPanel>
+    <UDashboardPanel class="pl-6">
       <slot />
     </UDashboardPanel>
   </UDashboardGroup>

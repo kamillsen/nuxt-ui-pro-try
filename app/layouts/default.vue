@@ -4,7 +4,7 @@
       class="bg-elevated/25" :ui="{ footer: 'lg:border-t lg:border-default' }">
       
       <template #header="{ collapsed }">
-        <div v-if="!collapsed" class="flex items-center justify-between px-4 py-4">
+        <div v-if="!collapsed" class="flex items-center px-4 py-4">
           <div class="flex items-center gap-3 flex-1 min-w-0">
             <div class="w-8 h-8 bg-primary-600 rounded flex items-center justify-center">
               <span class="text-white font-bold text-sm">D</span>
@@ -14,14 +14,13 @@
               <span class="text-xs text-muted-foreground">Admin Panel</span>
             </div>
           </div>
-          <div class="flex-shrink-0 ml-2">
-            <UDashboardSidebarCollapse />
-          </div>
         </div>
         
-        <!-- Collapsed state: center the collapse button -->
+        <!-- Collapsed state: just show the icon -->
         <div v-else class="flex items-center justify-center w-full py-4">
-          <UDashboardSidebarCollapse />
+          <div class="w-8 h-8 bg-primary-600 rounded flex items-center justify-center">
+            <span class="text-white font-bold text-sm">D</span>
+          </div>
         </div>
       </template>
 
@@ -46,8 +45,19 @@
       </template>
     </UDashboardSidebar>
 
-    <UDashboardPanel class="pl-6">
-      <slot />
+    <UDashboardPanel class="flex flex-col">
+      <!-- Header alanı -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-default">
+        <div class="flex items-center gap-3">
+          <UDashboardSidebarCollapse />
+          <h1 class="text-lg font-semibold">Content Area</h1>
+        </div>
+      </div>
+      
+      <!-- İçerik alanı -->
+      <div class="flex-1 px-6 pt-6">
+        <slot />
+      </div>
     </UDashboardPanel>
   </UDashboardGroup>
 </template>

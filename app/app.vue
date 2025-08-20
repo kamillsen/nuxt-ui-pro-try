@@ -1,6 +1,14 @@
+<script setup lang="ts">
+import { NuxtLayout } from '#components';
+
+</script>
+
 <!-- app.vue -->
 <template>
   <UApp>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+    
   </UApp>
 </template>

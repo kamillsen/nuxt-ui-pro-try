@@ -203,7 +203,9 @@ export const useCounterStore = defineStore('counter', {
 
 <script setup>
 import { ref } from 'vue'
-import { useTodosStore } from '~/stores/todos'
+import { useTodosStore } from '~~/stores/todos'
+
+
 import { storeToRefs } from 'pinia'
 
 definePageMeta({

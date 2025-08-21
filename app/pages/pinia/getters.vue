@@ -327,7 +327,7 @@ export const useProductsStore = defineStore('products', () => {
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useProductsStore } from '~/stores/products'
+import { useProductsStore } from '~~/stores//products'
 
 definePageMeta({
   layout: 'default'

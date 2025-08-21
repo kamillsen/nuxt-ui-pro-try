@@ -88,6 +88,12 @@ const menuItems: MenuLink[] = [{
       icon: 'i-heroicons-rocket-launch',
       to: '/pinia/advanced',
       status: 'active'
+    },
+    {
+      label: 'Kullanım Örnek',
+      icon: 'i-heroicons-academic-cap',
+      to: '/pinia',
+      status: 'active'
     }
   ]
 }, {

@@ -90,9 +90,9 @@ const menuItems: MenuLink[] = [{
       status: 'active'
     },
     {
-      label: 'Kullanım Örnek',
+      label: 'Todo-App',
       icon: 'i-heroicons-academic-cap',
-      to: '/pinia',
+      to: '/pinia/todo-app',
       status: 'active'
     }
   ]

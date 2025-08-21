@@ -6,5 +6,10 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   pinia: {
     storesDirs: ['./stores/**']
-  }
+  },
+  
+  runtimeConfig: {
+    // sadece server tarafından okunur (client'a sızmaz)
+    crudcrudBase: process.env.NUXT_CRUDCRUD_BASE || ''
+  },
 })

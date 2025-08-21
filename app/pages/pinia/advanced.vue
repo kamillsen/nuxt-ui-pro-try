@@ -490,8 +490,8 @@ const wrapper = mount(MyComponent, {
       <UButton to="/pinia/modules" variant="outline" icon="i-heroicons-arrow-left">
         Modülerlik
       </UButton>
-      <UButton to="/pinia" icon="i-heroicons-home" trailing>
-        Ana Sayfa
+      <UButton to="/pinia/todo-app" icon="i-heroicons-home" trailing>
+        Todo App
       </UButton>
     </div>
   </div>

@@ -36,6 +36,61 @@ const menuItems: MenuLink[] = [{
     }
   ]
 }, {
+  label: 'Pinia',
+  icon: 'i-heroicons-cube-transparent',
+  to: '/pinia',
+  status: 'active',
+  children: [
+    {
+      label: 'Giriş',
+      icon: 'i-heroicons-academic-cap',
+      to: '/pinia',
+      status: 'active'
+    },
+    {
+      label: 'Temel Kullanım',
+      icon: 'i-heroicons-play',
+      to: '/pinia/basics',
+      status: 'active'
+    },
+    {
+      label: 'Store Oluşturma',
+      icon: 'i-heroicons-building-storefront',
+      to: '/pinia/stores',
+      status: 'active'
+    },
+    {
+      label: 'State Yönetimi',
+      icon: 'i-heroicons-variable',
+      to: '/pinia/state',
+      status: 'active'
+    },
+    {
+      label: 'Getters',
+      icon: 'i-heroicons-funnel',
+      to: '/pinia/getters',
+      status: 'active'
+    },
+    {
+      label: 'Actions',
+      icon: 'i-heroicons-bolt',
+      to: '/pinia/actions',
+      status: 'active'
+    },
+    {
+      label: 'Modülerlik',
+      icon: 'i-heroicons-squares-2x2',
+      to: '/pinia/modules',
+      status: 'active'
+    },
+    {
+      label: 'İleri Düzey',
+      icon: 'i-heroicons-rocket-launch',
+      to: '/pinia/advanced',
+      status: 'active'
+    }
+  ]
+}, {
   label: 'Raporlar',
   icon: 'i-heroicons-chart-bar',
   to: '/reports',

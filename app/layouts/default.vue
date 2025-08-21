@@ -55,7 +55,7 @@
       </div>
       
       <!-- İçerik alanı -->
-      <div class="flex-1 px-6 pt-6">
+      <div class="flex-1 px-6 pt-6 pb-6 overflow-auto">
         <slot />
       </div>
     </UDashboardPanel>
@@ -69,10 +69,9 @@ import type { MenuLink } from '../../types'
 const open = ref(false)
 
 const { data: menuData, pending } = await useLazyFetch<MenuLink[]>('/api/menu', {
-  server: false,
   default: () => [],
   transform: async (data: MenuLink[]) => {
-    await new Promise(resolve => setTimeout(resolve, 300))
+    await new Promise(resolve => setTimeout(resolve, 100))
     return data
   }
 })

@@ -97,6 +97,19 @@ const menuItems: MenuLink[] = [{
     }
   ]
 }, {
+  label: 'E-Commerce',
+  icon: 'i-heroicons-shopping-cart',
+  to: '/ecommerce',
+  status: 'active',
+  children: [
+    {
+      label: 'Customers',
+      icon: 'i-heroicons-users',
+      to: '/ecommerce/customers',
+      status: 'active'
+    }
+  ]
+}, {
   label: 'Components',
   icon: 'i-heroicons-puzzle-piece',
   to: '/components',

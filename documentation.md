@@ -30,13 +30,19 @@ pinia-try/
 │   ├── 📁 components/               # Vue bileşenleri
 │   │   ├── StatsCard.vue           # İstatistik kartı bileşeni
 │   │   ├── UserCard.vue            # Kullanıcı kartı bileşeni
-│   │   └── UserMenu.vue            # Kullanıcı menüsü bileşeni
+│   │   ├── UserMenu.vue            # Kullanıcı menüsü bileşeni
+│   │   ├── FormExampleElements.vue # Kapsamlı form örneği bileşeni
+│   │   └── FormLoginExample.vue    # Login form örneği bileşeni
 │   ├── 📁 layouts/                  # Layout bileşenleri
 │   │   └── default.vue             # Ana layout (Dashboard UI)
 │   └── 📁 pages/                    # Route sayfaları
 │       ├── index.vue               # Ana sayfa
 │       ├── settings.vue            # Ayarlar sayfası
 │       ├── users.vue               # Kullanıcılar sayfası
+│       ├── 📁 components/           # Component örnekleri
+│       │   ├── index.vue           # Components ana sayfa
+│       │   └── 📁 form/            # Form component örnekleri
+│       │       └── index.vue       # Form örnekleri sayfası
 │       └── 📁 pinia/               # Pinia öğrenme sayfaları
 │           ├── index.vue           # Pinia ana sayfa
 │           ├── basics.vue          # Temel Pinia konuları
@@ -116,6 +122,8 @@ Dashboard Layout (default.vue)
 │   │   ├── Modüler Yapı (/pinia/modules)
 │   │   ├── İleri Seviye (/pinia/advanced)
 │   │   └── Todo App (/pinia/todo-app) ⭐
+│   ├── Components (/components/*)
+│   │   └── Form Examples (/components/form) ⭐
 │   ├── Kullanıcılar (/users)
 │   └── Ayarlar (/settings)
 └── Content Area (slot içeriği)
@@ -232,10 +240,22 @@ Layout Components:
 
 Form Components:
 ├── UCard                    # İçerik kartları
+├── UForm                    # Form wrapper
+├── UFormField               # Form alanı wrapper
 ├── UInput                   # Metin girişi
-├── UButton                  # Butonlar
-├── UFormGroup               # Form grupları
+├── UInputNumber             # Sayı girişi
+├── UInputMenu               # Menu ile input
+├── UTextarea                # Çoklu satır metin
+├── USelect                  # Seçim listesi
+├── USelectMenu              # Menu ile seçim
+├── USwitch                  # Açma/kapama butonu
 ├── UCheckbox                # Onay kutuları
+├── UCheckboxGroup           # Grup onay kutuları
+├── URadioGroup              # Radio buton grubu
+├── USlider                  # Kaydırıcı
+├── UPinInput                # PIN girişi
+├── UFileUpload              # Dosya yükleme
+├── UButton                  # Butonlar
 └── UAlert                   # Uyarı mesajları
 
 Feedback Components:
@@ -334,6 +354,64 @@ npm install
 npm run postinstall
 ```
 
+## 🎯 Component Örnekleri
+
+### Form Components (`/components/form`)
+
+#### Kapsamlı Form Örneği (FormExampleElements.vue)
+Bu component, Nuxt UI Pro'nun sunduğu tüm form elementlerini gösterir:
+
+```typescript
+// Validation Schema (Zod ile)
+const schema = z.object({
+  input: z.string().min(10),
+  inputNumber: z.number().min(10),
+  textarea: z.string().min(10),
+  select: z.string(),
+  selectMultiple: z.array(z.string()),
+  selectMenu: z.any(),
+  inputMenu: z.any(),
+  switch: z.boolean(),
+  checkbox: z.boolean(),
+  radioGroup: z.string(),
+  checkboxGroup: z.any(),
+  slider: z.number().max(20),
+  pin: z.string().array().length(5),
+  file: z.any().optional()
+})
+```
+
+**Özellikler:**
+- Gerçek zamanlı validasyon (input, change, blur events)
+- Grid tabanlı responsive layout
+- Optimistic form handling
+- Toast bildirimleri
+- Form temizleme fonksiyonu
+
+#### Login Form Örneği (FormLoginExample.vue)
+Basit email/şifre formu örneği:
+
+```typescript
+// Validation Schema (Valibot ile)
+const schema = v.object({
+  email: v.pipe(v.string(), v.email('Invalid email')),
+  password: v.pipe(v.string(), v.minLength(8, 'Must be at least 8 characters'))
+})
+```
+
+**Özellikler:**
+- Email format validasyonu
+- Minimum şifre uzunluğu kontrolü
+- Toast bildirimleri
+- Basit ve temiz tasarım
+
+### Form Validation Features
+- **Auto-validation:** input, change, blur eventlerinde otomatik validasyon
+- **Custom Validation:** Zod ve Valibot desteği
+- **Error Display:** Inline hata mesajları
+- **Success Feedback:** Toast notification sistemı
+- **Form State Management:** Reactive state yönetimi
+
 ## 📊 Performans Optimizasyonları
 
 ### Frontend Optimizations
@@ -342,6 +420,7 @@ npm run postinstall
 - **SSR/SSG:** Server-side rendering support
 - **Image Optimization:** Built-in image optimization
 - **Bundle Splitting:** Automatic chunk splitting
+- **Component Auto-import:** Nuxt UI Pro otomatik import
 
 ### State Management Optimizations
 - **Selective Reactivity:** Only track necessary state changes

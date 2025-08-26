@@ -112,7 +112,7 @@
         İleri Düzey
       </UButton>
       <UButton to="/pinia" icon="i-heroicons-arrow-right" trailing>
-        Ana Sayfa
+        Ana
       </UButton>
     </div>
   </div>

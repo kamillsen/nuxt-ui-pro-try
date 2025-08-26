@@ -71,9 +71,10 @@ const open = ref(false)
 const { data: menuData, pending } = await useLazyFetch<MenuLink[]>('/api/menu', {
   default: () => [],
   transform: async (data: MenuLink[]) => {
-    await new Promise(resolve => setTimeout(resolve, 100))
+    await new Promise(resolve => setTimeout(resolve, 100)) // yükleniyor animasyonunu” test
     return data
   }
+
 })
 
 const transformMenuToNavigation = (menuItems: MenuLink[]): NavigationMenuItem[][] => {

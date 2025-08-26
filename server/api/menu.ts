@@ -97,6 +97,19 @@ const menuItems: MenuLink[] = [{
     }
   ]
 }, {
+  label: 'Components',
+  icon: 'i-heroicons-puzzle-piece',
+  to: '/components',
+  status: 'active',
+  children: [
+    {
+      label: 'Form',
+      icon: 'i-heroicons-document-text',
+      to: '/components/form',
+      status: 'active'
+    }
+  ]
+}, {
   label: 'Raporlar',
   icon: 'i-heroicons-chart-bar',
   to: '/reports',

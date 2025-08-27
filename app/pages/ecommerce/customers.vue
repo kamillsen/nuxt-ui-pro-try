@@ -49,13 +49,13 @@
       </template>
 
       <!-- Veri yükleniyor -->
-      <div v-if="pending" class="flex items-center justify-center p-8">
+      <div v-if="customerStore.loading" class="flex items-center justify-center p-8">
         <UIcon name="i-heroicons-arrow-path" class="h-8 w-8 animate-spin" />
       </div>
 
       <!-- Hata durumu -->
-      <div v-else-if="error" class="p-4 bg-red-50 text-red-700 rounded-md">
-        Error loading customers: {{ error }}
+      <div v-else-if="customerStore.error" class="p-4 bg-red-50 text-red-700 rounded-md">
+        Error loading customers: {{ customerStore.error }}
       </div>
 
       <!-- Tablo: içeride scroll, sayfa numarası yok -->
@@ -65,7 +65,7 @@
           v-model:sorting="sorting"
           v-model:column-visibility="columnVisibility"
           v-model:column-filters="columnFilters"
-          :data="customers"
+          :data="customerStore.customers"
           :columns="columns"
           sticky
           class="flex-1 h-80" 
@@ -82,33 +82,27 @@ import { upperFirst } from 'scule'
 import type { TableColumn } from '@nuxt/ui'
 import type { Row } from '@tanstack/vue-table'
 import { useClipboard } from '@vueuse/core'
+import { useCustomerStore } from '~~/stores/ecommerce'
+import type { Customer } from '~~/types/ecommerce'
 
 const UButton = resolveComponent('UButton')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 const UCheckbox = resolveComponent('UCheckbox')
 
+// Store'u kullan
+const customerStore = useCustomerStore()
 const toast = useToast()
 const { copy } = useClipboard()
 
-/** Customer tipi (API'den gelen) */
-type Customer = {
-  id: string
-  name: string
-  email: string
-  phone: string
-  addresses: Array<{
-    id: number
-    title: string
-    line1: string
-    city: string
-    country: string
-    postalCode: string
-  }>
-  createdAt: string
-}
-
-/** API'den müşteri verilerini çekiyoruz */
-const { data: customers, pending, error } = await useFetch<Customer[]>('http://localhost:3001/customers')
+// Sayfa yüklendiğinde customer'ları çek
+onMounted(async () => {
+  try {
+    await customerStore.fetchCustomers()
+  } catch (error) {
+    // Error zaten store'da handle edildi
+    console.error('Failed to load customers:', error)
+  }
+})
 
 /** Kolon başlıklarını sıralanabilir buton haline getiren helper */
 function sortableHeader(column: any, label: string) {

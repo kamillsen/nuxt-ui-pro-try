@@ -1,8 +1,8 @@
-# Pinia Todo App - Comprehensive Documentation
+# Pinia Todo App & E-Commerce - Comprehensive Documentation
 
 ## 📋 Proje Özeti
 
-Bu proje **Nuxt 3** ve **Pinia** kullanılarak geliştirilmiş bir Todo uygulaması ve Pinia öğrenme platformudur. Modern Vue.js ekosisteminin en güncel teknolojilerini kullanarak state management, API entegrasyonu ve responsive UI tasarımını demonstre eder.
+Bu proje **Nuxt 3** ve **Pinia** kullanılarak geliştirilmiş bir Todo uygulaması, E-Commerce modülü ve Pinia öğrenme platformudur. Modern Vue.js ekosisteminin en güncel teknolojilerini kullanarak state management, API entegrasyonu, table management ve responsive UI tasarımını demonstre eder.
 
 ## 🏗️ Proje Mimarisi
 
@@ -12,10 +12,12 @@ Bu proje **Nuxt 3** ve **Pinia** kullanılarak geliştirilmiş bir Todo uygulama
 - **UI Framework:** Nuxt UI Pro 3.3.2
 - **Styling:** Tailwind CSS (Nuxt UI Pro ile entegre)
 - **TypeScript:** Full TypeScript desteği
+- **Table Management:** TanStack Table integration
 
 ### Backend Mimarisi
 - **API Layer:** Nuxt Server API (Nitro engine)
 - **External API:** CrudCrud proxy integration
+- **E-Commerce API:** JSON Server integration (localhost:3001)
 - **Data Flow:** RESTful API endpoints
 
 ## 📁 Folder Structure
@@ -32,7 +34,9 @@ pinia-try/
 │   │   ├── UserCard.vue            # Kullanıcı kartı bileşeni
 │   │   ├── UserMenu.vue            # Kullanıcı menüsü bileşeni
 │   │   ├── FormExampleElements.vue # Kapsamlı form örneği bileşeni
-│   │   └── FormLoginExample.vue    # Login form örneği bileşeni
+│   │   ├── FormLoginExample.vue    # Login form örneği bileşeni
+│   │   └── 📁 ecommerce/           # E-Commerce bileşenleri
+│   │       └── 📁 customer/        # Customer modülü bileşenleri
 │   ├── 📁 layouts/                  # Layout bileşenleri
 │   │   └── default.vue             # Ana layout (Dashboard UI)
 │   └── 📁 pages/                    # Route sayfaları
@@ -43,6 +47,8 @@ pinia-try/
 │       │   ├── index.vue           # Components ana sayfa
 │       │   └── 📁 form/            # Form component örnekleri
 │       │       └── index.vue       # Form örnekleri sayfası
+│       ├── 📁 ecommerce/           # E-Commerce sayfaları
+│       │   └── customers.vue       # Customer management sayfası
 │       └── 📁 pinia/               # Pinia öğrenme sayfaları
 │           ├── index.vue           # Pinia ana sayfa
 │           ├── basics.vue          # Temel Pinia konuları
@@ -57,11 +63,14 @@ pinia-try/
 ├── 📁 server/                      # Nuxt Server API
 │   └── 📁 api/                     # API endpoints
 │       ├── menu.ts                 # Menü API'si
-│       └── 📁 todos/               # Todo API endpoints
-│           ├── index.get.ts        # GET /api/todos
-│           ├── index.post.ts       # POST /api/todos
-│           ├── [id].put.ts         # PUT /api/todos/:id
-│           └── [id].delete.ts      # DELETE /api/todos/:id
+│       ├── 📁 todos/               # Todo API endpoints
+│       │   ├── index.get.ts        # GET /api/todos
+│       │   ├── index.post.ts       # POST /api/todos
+│       │   ├── [id].put.ts         # PUT /api/todos/:id
+│       │   └── [id].delete.ts      # DELETE /api/todos/:id
+│       └── 📁 ecommerce-api/       # E-Commerce API endpoints
+│           └── 📁 customer/        # Customer API endpoints
+│               └── customer-api.get.ts # GET /api/ecommerce-api/customer
 ├── 📁 stores/                      # Pinia store'ları
 │   ├── index.ts                    # Store index
 │   ├── counter.ts                  # Counter store
@@ -69,16 +78,29 @@ pinia-try/
 │   ├── settings.ts                 # Settings store
 │   ├── products.ts                 # Products store
 │   ├── todos.ts                    # Demo todos store
-│   └── todo-app.ts                 # Ana todo app store
+│   ├── todo-app.ts                 # Ana todo app store
+│   └── 📁 ecommerce/               # E-Commerce store'ları
+│       ├── index.ts                # E-Commerce store index
+│       └── 📁 customer/            # Customer store'ları
+│           └── customer-pinia.ts   # Customer Pinia store
 ├── 📁 types/                       # TypeScript tip tanımları
-│   └── index.ts                    # Global types
+│   ├── index.ts                    # Global types
+│   └── 📁 ecommerce/               # E-Commerce tip tanımları
+│       ├── index.ts                # E-Commerce types index
+│       ├── 📁 customer/            # Customer tip tanımları
+│       │   └── customer-types.ts   # Customer & Address interfaces
+│       └── 📁 shared/              # Ortak tip tanımları
+│           └── common-types.ts     # Ortak e-commerce types
 ├── 📁 public/                      # Statik public dosyalar
 │   ├── favicon.ico
 │   └── robots.txt
 ├── nuxt.config.ts                  # Nuxt konfigürasyonu
 ├── package.json                    # Proje bağımlılıkları
 ├── tsconfig.json                   # TypeScript konfigürasyonu
-└── documentation.md                # Bu dosya
+├── documentation.md                # Bu dosya
+├── ARCHITECTURE.md                 # Mimari dokümantasyon
+├── ecommerce-customer.md           # Customer modülü dokümantasyonu
+└── pinia.md                        # Pinia özel dokümantasyon
 ```
 
 ## 🛠️ Kullanılan Teknolojiler
@@ -182,6 +204,33 @@ Actions:
 - **products.ts:** Ürün listesi store
 - **todos.ts:** Demo todo store (öğrenme amaçlı)
 
+### E-Commerce Store'ları
+- **stores/ecommerce/index.ts:** E-Commerce store index
+- **stores/ecommerce/customer/customer-pinia.ts:** Customer management store
+
+#### Customer Store (`stores/ecommerce/customer/customer-pinia.ts`)
+```typescript
+interface Customer {
+  id: string
+  name: string
+  email: string
+  phone: string
+  addresses: Address[]
+  createdAt: string
+}
+
+State:
+- customers: Customer[]      // Customer listesi
+- loading: boolean           // Yükleme durumu
+- error: string | null       // Hata mesajı
+
+Getters:
+- customerCount: number      // Toplam customer sayısı
+
+Actions:
+- fetchCustomers()          // Tüm customer'ları getir (JSON Server API)
+```
+
 ## 🌐 API Endpoints
 
 ### Todo API (`/api/todos/`)
@@ -196,6 +245,11 @@ Actions:
 | Method | Endpoint | Açıklama |
 |--------|----------|----------|
 | GET | `/api/menu` | Sidebar menü yapısını getir |
+
+### E-Commerce API (`/api/ecommerce-api/`)
+| Method | Endpoint | Açıklama |
+|--------|----------|----------|
+| GET | `/api/ecommerce-api/customer` | Customer listesini getir (JSON Server proxy) |
 
 ## ⚙️ Konfigürasyon
 
@@ -219,6 +273,8 @@ export default defineNuxtConfig({
 ```env
 NUXT_CRUDCRUD_BASE=https://crudcrud.com/api/[your-api-key]
 NUXT_UI_PRO_LICENSE=your-license-key
+# E-Commerce API için JSON Server (development)
+ECOMMERCE_API_BASE=http://localhost:3001
 ```
 
 ## 🎨 UI/UX Özellikleri
@@ -262,7 +318,14 @@ Feedback Components:
 ├── USkeleton                # Yükleme durumu
 ├── UBadge                   # Etiketler
 ├── UIcon                    # İkonlar
-└── UNavigationMenu          # Navigasyon menüleri
+├── UNavigationMenu          # Navigasyon menüleri
+└── UTable                   # Veri tabloları (E-Commerce)
+
+Data Management Components:
+├── UTable                   # TanStack Table entegrasyonu
+├── UDropdownMenu            # Menü seçenekleri
+├── UCheckbox                # Çoklu seçim
+└── Column Visibility        # Kolon görünürlüğü kontrolü
 ```
 
 ### Responsive Design
@@ -283,6 +346,8 @@ Feedback Components:
 6. Route Resolution
 7. Page Component Mount
 8. Store Data Fetch (if needed)
+   - Todo App: CrudCrud API
+   - E-Commerce: JSON Server API
 9. UI Render Complete
 ```
 
@@ -304,7 +369,30 @@ Feedback Components:
 🔄 UI Final State
 ```
 
-### 3. Error Handling Flow
+### 3. E-Commerce Customer Management Workflow
+```
+📊 Customer Page Load
+    ↓
+🗂️ Customer Store: fetchCustomers()
+    ↓
+🌐 API Call: JSON Server (localhost:3001/customers)
+    ↓
+📱 UTable Render with Data
+    ↓
+🔍 Search & Filter (Real-time)
+    ↓
+📋 Column Management (Show/Hide)
+    ↓
+⚡ Actions Menu (View/Edit/Delete/Copy ID)
+    ↓
+💼 Row Selection (Checkbox)
+    ↓
+📄 Sortable Headers (Multi-column)
+    ↓
+🎯 Responsive Table (Fixed Height + Scroll)
+```
+
+### 4. Error Handling Flow
 ```
 API Error Occurs
     ↓
@@ -319,7 +407,7 @@ User Notification
 Retry Option Available
 ```
 
-### 4. State Synchronization
+### 5. State Synchronization
 ```
 Multiple Components
     ↓
@@ -355,6 +443,42 @@ npm run postinstall
 ```
 
 ## 🎯 Component Örnekleri
+
+### E-Commerce Components (`/pages/ecommerce/`)
+
+#### Customer Management (`customers.vue`)
+Gelişmiş veri yönetimi sayfası örneği:
+
+**Özellikler:**
+- **TanStack Table Integration:** Modern tablo yönetimi
+- **Real-time Search:** İsme göre anlık arama
+- **Column Management:** Kolon görünürlüğü kontrolü
+- **Sortable Headers:** Çok kolonlu sıralama
+- **Row Selection:** Checkbox ile seçim
+- **Actions Menu:** Satır bazlı işlemler (View/Edit/Delete/Copy)
+- **Fixed Height Table:** Sabit yükseklik + scroll
+- **Responsive Design:** Mobil uyumlu tasarım
+- **Loading States:** Yükleme animasyonları
+- **Error Handling:** Hata durumu yönetimi
+
+**Technical Implementation:**
+```typescript
+// Table columns configuration
+const columns: TableColumn<Customer>[] = [
+  { id: 'select', ... },           // Checkbox column
+  { accessorKey: 'id', ... },      // ID column  
+  { accessorKey: 'name', ... },    // Name column (searchable)
+  { accessorKey: 'email', ... },   // Email column
+  { accessorKey: 'phone', ... },   // Phone column
+  { id: 'city', accessorFn: ... }, // City from address
+  { accessorKey: 'createdAt', ... },// Date column
+  { id: 'actions', ... }           // Actions dropdown
+]
+
+// Store integration
+const customerStore = useCustomerStore()
+await customerStore.fetchCustomers()
+```
 
 ### Form Components (`/components/form`)
 
@@ -421,6 +545,9 @@ const schema = v.object({
 - **Image Optimization:** Built-in image optimization
 - **Bundle Splitting:** Automatic chunk splitting
 - **Component Auto-import:** Nuxt UI Pro otomatik import
+- **Table Virtualization:** Large dataset handling (UTable)
+- **Column Management:** Dynamic show/hide columns
+- **Search Optimization:** Client-side filtering
 
 ### State Management Optimizations
 - **Selective Reactivity:** Only track necessary state changes
@@ -488,28 +615,48 @@ npm run dev
 ## 📈 Future Improvements
 
 ### Planned Features
+
+#### Todo App Enhancements
 - [ ] User authentication
 - [ ] Real-time updates (WebSocket)
 - [ ] Offline support (PWA)
 - [ ] Data export/import
 - [ ] Advanced filtering
 - [ ] Collaboration features
+
+#### E-Commerce Module Enhancements
+- [ ] Customer CRUD operations (Create, Update, Delete)
+- [ ] Customer detail modal/page
+- [ ] Advanced filtering (date range, city, etc.)
+- [ ] Bulk operations (delete, export selected)
+- [ ] Customer import/export (CSV, Excel)
+- [ ] Customer address management
+- [ ] Pagination for large datasets
+- [ ] Print customer list functionality
+
+#### General Improvements
 - [ ] Mobile app version
 - [ ] Performance analytics
+- [ ] Dashboard analytics
+- [ ] Multi-language support (i18n)
 
 ### Technical Improvements
-- [ ] Comprehensive testing suite
-- [ ] CI/CD pipeline
+- [ ] Comprehensive testing suite (Unit, Integration, E2E)
+- [ ] CI/CD pipeline setup
 - [ ] Docker containerization
-- [ ] Database integration
+- [ ] Database integration (PostgreSQL/MySQL)
 - [ ] Monitoring and logging
-- [ ] Performance metrics
+- [ ] Performance metrics and analytics
 - [ ] Security hardening
-- [ ] Accessibility improvements
+- [ ] Accessibility improvements (WCAG compliance)
+- [ ] API rate limiting and caching
+- [ ] Error tracking and monitoring (Sentry integration)
+- [ ] Performance monitoring (Web Vitals)
+- [ ] SEO optimization
 
 ## 👥 Katkıda Bulunma
 
-Bu proje Pinia öğrenme amaçlı geliştirilmiştir. Geliştirme sürecine katkıda bulunmak için:
+Bu proje Pinia öğrenme ve E-Commerce modülü demonstration amaçlı geliştirilmiştir. Geliştirme sürecine katkıda bulunmak için:
 
 1. Fork the project
 2. Create feature branch

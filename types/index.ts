@@ -6,3 +6,6 @@ export interface MenuLink {
   badge?: string
   children?: MenuLink[]
 }
+
+// Ecommerce types
+export * from './ecommerce'

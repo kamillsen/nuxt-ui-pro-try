@@ -51,10 +51,16 @@ import { h, resolveComponent } from 'vue'
 import { useProductStore } from '~~/stores/ecommerce/product/product-pinia';
 import type { Product } from '~~/types/ecommerce/product/product-types';
 import type { TableColumn } from '@nuxt/ui';
+import type { Row } from '@tanstack/vue-table';
+import { useClipboard } from '@vueuse/core';
 
 const UBadge = resolveComponent('UBadge')
+const UButton = resolveComponent('UButton')
+const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 const productStore = useProductStore();
+const toast = useToast()
+const { copy } = useClipboard()
 
 onMounted(() => {
   productStore.fetchProducts();
@@ -65,6 +71,25 @@ const table = useTemplateRef('table');
 const onUpdateNameFilter = (val: string) => {
   table.value?.tableApi?.getColumn('name')?.setFilterValue(val);
 };
+
+/** Sağdaki Actions menüsünde gösterilecek seçenekler */
+function getRowActions(row: Row<Product>) {
+  return [
+    { type: 'label', label: 'Actions' },
+    { label: 'View' },
+    { label: 'Edit' },
+    { label: 'Delete', color: 'error' },
+    { type: 'separator' as const },
+    {
+      label: 'Copy product ID',
+      icon: 'i-lucide-copy',
+      onSelect() {
+        copy(row.original.id)
+        toast.add({ title: 'Product ID copied!', color: 'success', icon: 'i-lucide-circle-check' })
+      }
+    }
+  ]
+}
 
 const columns: TableColumn<Product>[] = [
   {
@@ -100,5 +125,26 @@ const columns: TableColumn<Product>[] = [
     header: 'Created At',
     cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString('tr-TR'),
   },
+  // Actions kolonu (sağ)
+  {
+    id: 'actions',
+    enableHiding: false,
+    cell: ({ row }) =>
+      h('div', { class: 'text-right' },
+        h(UDropdownMenu, {
+          content: { align: 'end' },
+          items: getRowActions(row),
+          'aria-label': 'Actions dropdown'
+        }, () =>
+          h(UButton, {
+            icon: 'i-lucide-ellipsis-vertical',
+            color: 'neutral',
+            variant: 'ghost',
+            class: 'ml-auto',
+            'aria-label': 'Actions dropdown'
+          })
+        )
+      )
+  }
 ];
 </script>

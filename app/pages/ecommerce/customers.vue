@@ -1,20 +1,23 @@
 <template>
   <div class="space-y-6">
-    <!-- Sayfa başlığı ve yeni müşteri butonu -->
+    <!-- Sayfa Başlığı -->
     <div class="flex items-center justify-between">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Customers</h2>
+      <!-- Yeni Müşteri Butonu -->
       <UButton color="primary">
         <UIcon name="i-heroicons-plus" class="mr-2" />
         New Customer
       </UButton>
     </div>
 
+    <!-- Müşteri Tablosu Kartı -->
     <UCard>
+      <!-- Kart Başlığı: Arama ve Kolon Seçimi -->
       <template #header>
         <div class="flex items-center gap-2 w-full">
           <h3 class="text-lg font-semibold">Customer List</h3>
 
-          <!-- Sadece isim kolonunda arama -->
+          <!-- Müşteri Adı Arama Inputu -->
           <UInput
             :model-value="(table?.tableApi?.getColumn('name')?.getFilterValue() as string) || ''"
             placeholder="Search name…"
@@ -22,7 +25,7 @@
             @update:model-value="onUpdateNameFilter"
           />
 
-          <!-- Kolon görünürlüğünü aç/kapat dropdown -->
+          <!-- Kolon Görünürlüğü Dropdown Menüsü -->
           <UDropdownMenu
             :items="table?.tableApi?.getAllColumns()
               .filter(c => c.getCanHide())
@@ -37,6 +40,7 @@
               }))"
             :content="{ align: 'end' }"
           >
+            <!-- Dropdown'u açan "Columns" butonu -->
             <UButton
               label="Columns"
               color="neutral"
@@ -48,17 +52,17 @@
         </div>
       </template>
 
-      <!-- Veri yükleniyor -->
+      <!-- Yükleme Durumu Göstergesi -->
       <div v-if="customerStore.loading" class="flex items-center justify-center p-8">
         <UIcon name="i-heroicons-arrow-path" class="h-8 w-8 animate-spin" />
       </div>
 
-      <!-- Hata durumu -->
+      <!-- Hata Durumu Mesajı -->
       <div v-else-if="customerStore.error" class="p-4 bg-red-50 text-red-700 rounded-md">
         Error loading customers: {{ customerStore.error }}
       </div>
 
-      <!-- Tablo: içeride scroll, sayfa numarası yok -->
+      <!-- Müşteri Veri Tablosu -->
       <div v-else class="w-full">
         <UTable
           ref="table"
@@ -71,7 +75,6 @@
           class="flex-1 h-80" 
         />
       </div>
-      <!-- class="flex-1 h-80"  :   sabit yükseklik ≈ 6 satır, fazlası scroll -->
     </UCard>
   </div>
 </template>

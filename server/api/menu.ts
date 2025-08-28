@@ -107,6 +107,12 @@ const menuItems: MenuLink[] = [{
       icon: 'i-heroicons-users',
       to: '/ecommerce/customers',
       status: 'active'
+    },
+    {
+      label: 'Products',
+      icon: 'i-heroicons-archive-box',
+      to: '/ecommerce/products',
+      status: 'active'
     }
   ]
 }, {

@@ -1,3 +1,4 @@
+// customer-pinia.ts - Composition API
 import { defineStore } from 'pinia'
 import type { Customer } from '~~/types/ecommerce'
 
@@ -16,7 +17,8 @@ export const useCustomerStore = defineStore('customer', () => {
     error.value = null
     
     try {
-      const data = await $fetch<Customer[]>('http://localhost:3001/customers')
+      const response = await $fetch<{success: boolean, data: Customer[]}>('/api/ecommerce-api/customer/customer-api')
+      const data = response.data
       customers.value = data
     } catch (err: any) {
       error.value = err.message || 'Failed to fetch customers'

@@ -1,8 +1,8 @@
-//todo-app
+//todo-app - Options API 
 import { defineStore } from 'pinia'
 import { $fetch } from 'ofetch'
 
-
+ 
 export type Todo = {
   _id?: string
   title: string

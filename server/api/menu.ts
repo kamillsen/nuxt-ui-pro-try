@@ -158,6 +158,12 @@ const menuItems: MenuLink[] = [{
       icon: 'i-heroicons-squares-2x2',
       to: '/syncfusion/grid',
       status: 'active'
+    },
+    {
+      label: 'Detail Template',
+      icon: 'i-heroicons-document-magnifying-glass',
+      to: '/syncfusion/detail-template',
+      status: 'active'
     }
   ]
 }]

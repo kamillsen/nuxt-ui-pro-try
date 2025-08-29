@@ -1,3 +1,5 @@
+import { onMounted, onUnmounted } from 'vue'
+
 export function useSyncfusionTheme() {
   if (!import.meta.client) {
     return {

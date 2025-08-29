@@ -83,93 +83,77 @@
   </div>
 </template>
 
-<script setup>
-import { provide, ref, createApp } from "vue";
-import { GridComponent as EjsGrid, ColumnsDirective as EColumns, ColumnDirective as EColumn, DetailRow, Sort, Filter } from "@syncfusion/ej2-vue-grids";
-import { TabComponent as EjsTab, TabItemsDirective as ETabitems, TabItemDirective as ETabitem } from "@syncfusion/ej2-vue-navigations";
-import { ChartComponent as EjsChart, SeriesDirective as ESeries, SeriesCollectionDirective as ESeriesCollection, LineSeries, Legend, Tooltip, DateTime, Category, Highlight } from "@syncfusion/ej2-vue-charts";
-import { employeeDetail, taskDetail } from './data-source';
-import { KanbanComponent as EjsKanban, ColumnsDirective as EKanbancolumns, ColumnDirective as EKanbancolumn} from "@syncfusion/ej2-vue-kanban";
-
-// Syncfusion dinamik tema yönetimi
-useSyncfusionTheme()
-
-const employeeDataParent = ref(employeeDetail);
-const headerText0 = ref({ text: 'Taskboard' });
-const headerText1 = ref({ text: 'Burndown Chart' });
-const filterSettings = ref({ type: 'CheckBox' });
-const tooltip = ref(true);
-const markerOptions = ref({ visible: true, width: 10, height: 10 });
-const primaryXAxis = ref({ valueType: 'Category', title: 'Status' });
-const salesData = ref([]);
-const taskData = ref([]);
-
-const cardSettings = ref({
-  headerField: "Id",
-  template: function () {
-    return { template: createApp({}).component('sortCardTemplate', {
-      template: `<div className="card-template">
-      <table className="card-template-wrap" style="width: 100%;">
-        <tbody>
-          <tr>
-            <td className="e-title">
-              <div className="e-card-header">
-                <div className="e-card-header-caption">
-                  <div className="e-card-header-title e-tooltip-text">
-                    {{data.Id}}
-                  </div>
-                </div>
-              </div>
-              <table
-                className="card-template-wrap">
-                <tbody>
-                  <tr className='e-tooltip-text'>
-                    <td>
-                      <div className="e-card-content">
-                        {{data.Summary}}
-                      </div>
-                      <span className="e-card-content"><b>Estimated hour:</b> {{data.Estimate}}</span>
-                    </td>
-
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table >
-    </div >`,
-      data: function () {return {data: {data: {}}};}
-    }) 
-  };
-  }
-});
-
-function detailDataBound(args) {
-  const rowData = args.data;
-  taskData.value = taskDetail.filter((task) => task.Assignee === rowData.Name);
-  salesData.value = generateData(taskData.value);
-}
-
-function generateData(taskData) {
-  const statusCategories = ['Open', 'InProgress', 'Testing', 'Close'];
-  const statusData = statusCategories.map((status) => {
-    const filteredTasks = taskData.filter((task) => task.Status === status);
-    const estimatedHours = filteredTasks.reduce((sum, task) => sum + task.Estimate, 0);
-    const spentHours = filteredTasks.reduce((sum, task) => sum + task.Spent, 0);
-    let taskid = '';
-    if (filteredTasks.length) {
-      taskid = filteredTasks[0].Id;
-    }
-    return { spentHours, estimatedHours, status, taskid };
-  });
-  return statusData;
-}
-
-provide('grid', [DetailRow, Sort, Filter]);
-provide('chart', [LineSeries, Legend, Tooltip, Category, DateTime, Highlight]);
-</script>
-
 <style scoped>
 @import "~/assets/css/detail-template.css";
 </style>
+
+<script lang="ts">
+import { createApp } from "vue";
+import { GridComponent, ColumnsDirective, ColumnDirective, DetailRow, Sort, Filter } from "@syncfusion/ej2-vue-grids";
+import { TabComponent, TabItemsDirective, TabItemDirective } from "@syncfusion/ej2-vue-navigations";
+import { ChartComponent, SeriesDirective, SeriesCollectionDirective, LineSeries, Legend, Tooltip, DateTime, Category, Highlight } from "@syncfusion/ej2-vue-charts";
+import { employeeDetail, taskDetail } from './data-source';
+import { KanbanComponent, ColumnsDirective as KanbanColumns, ColumnDirective as KanbanColumn} from "@syncfusion/ej2-vue-kanban";
+
+export default {
+  name: "DetailTemplate",
+  components: {
+    "ejs-grid": GridComponent,
+    "e-columns": ColumnsDirective,
+    "e-column": ColumnDirective,
+    'ejs-tab': TabComponent,
+    'e-tabitems': TabItemsDirective,
+    'e-tabitem': TabItemDirective,
+    'ejs-chart': ChartComponent,
+    'e-series-collection': SeriesCollectionDirective,
+    'e-series': SeriesDirective,
+    'ejs-kanban': KanbanComponent,
+    'e-kanbancolumns': KanbanColumns,
+    'e-kanbancolumn': KanbanColumn
+  },
+  setup() {
+    // Syncfusion dinamik tema yönetimi
+    useSyncfusionTheme()
+  },
+  data() {
+    return {
+      employeeDataParent: employeeDetail,
+      headerText0: { text: 'Taskboard' },
+      headerText1: { text: 'Burndown Chart' },
+      pageSettings: { pageSize: 5 },
+      filterSettings: { type: 'CheckBox' },
+      tooltip: true,
+      markerOptions: { visible: true, width: 10, height: 10 },
+      primaryXAxis: { valueType: 'Category', title: 'Status' },
+      salesData: [],
+      taskData: [],
+      cardSettings: {
+        contentField: "Summary",
+        headerField: "Id"
+      }
+    };
+  },
+  methods: {
+    detailDataBound: function (args: any) {
+      var rowData = args.data;
+      (this as any).taskData = taskDetail.filter((task: any) => task.Assignee === rowData.Name);
+      (this as any).salesData = this.generateData((this as any).taskData);
+    },
+    generateData: function (taskData: any) {
+      const statusCategories = ['Open', 'InProgress', 'Testing', 'Close'];
+      const statusData = statusCategories.map((status) => {
+        const filteredTasks = taskData.filter((task: any) => task.Status === status);
+        const estimatedHours = filteredTasks.reduce((sum: any, task: any) => sum + task.Estimate, 0);
+        const spentHours = filteredTasks.reduce((sum: any, task: any) => sum + task.Spent, 0);
+        let taskid = '';
+        if (filteredTasks.length) {
+          taskid = filteredTasks[0].Id;
+        }
+        return { spentHours, estimatedHours, status, taskid };
+      });
+      return statusData;
+    }
+  },
+  provide: { grid: [DetailRow, Sort, Filter], chart: [LineSeries, Legend, Tooltip, Category, DateTime, Highlight] }
+};
+</script>

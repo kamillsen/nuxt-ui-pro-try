@@ -52,6 +52,7 @@
           <UDashboardSidebarCollapse />
           <h1 class="text-lg font-semibold">Content Area</h1>
         </div>
+        <UColorModeButton />
       </div>
       
       <!-- İçerik alanı -->

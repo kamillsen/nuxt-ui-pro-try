@@ -3,13 +3,10 @@
     <!-- Sayfa Başlığı -->
     <div class="flex items-center justify-between">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Syncfusion Grid</h2>
-      <div class="flex items-center gap-2">
-        <UColorModeButton />
-        <UButton color="primary">
-          <UIcon name="i-heroicons-plus" class="mr-2" />
-          Add New
-        </UButton>
-      </div>
+      <UButton color="primary">
+        <UIcon name="i-heroicons-plus" class="mr-2" />
+        Add New
+      </UButton>
     </div>
 
     <!-- Grid Tablosu Kartı -->
@@ -68,7 +65,7 @@ import { GridComponent as EjsGrid, ColumnDirective as EColumn, ColumnsDirective 
 import { data } from './datasource.js'
 
 // Syncfusion dinamik tema yönetimi
-const { updateSyncfusionTheme } = useSyncfusionTheme()
+useSyncfusionTheme()
 
 const searchValue = ref('')
 

@@ -1,6 +1,9 @@
+import { defineNuxtPlugin } from 'nuxt/app'
+import { useColorMode } from '@vueuse/core'
+import { watch } from 'vue'
 export default defineNuxtPlugin(() => {
   // Syncfusion theme sisteminin başlatılması
-  if (process.client) {
+  if (typeof window !== 'undefined') {
     console.log('🎨 Syncfusion theme system initialized')
     
     // Tema değişikliklerini dinle

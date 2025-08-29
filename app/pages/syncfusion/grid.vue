@@ -67,7 +67,7 @@ import { provide, ref, computed } from "vue";
 import { GridComponent as EjsGrid, ColumnDirective as EColumn, ColumnsDirective as EColumns, Filter } from "@syncfusion/ej2-vue-grids";
 import { data } from './datasource.js'
 
-// Syncfusion tema yönetimi
+// Syncfusion dinamik tema yönetimi
 const { updateSyncfusionTheme } = useSyncfusionTheme()
 
 const searchValue = ref('')

@@ -1,0 +1,12 @@
+/* Syncfusion Theme System - Main Entry Point */
+
+/* Base theme variables and colors */
+@import './base.css';
+
+/* Component-specific themes */
+@import './components/grid.css';
+
+/* Future component themes will be added here */
+/* @import './components/calendar.css'; */
+/* @import './components/chart.css'; */
+/* @import './components/dropdown.css'; */

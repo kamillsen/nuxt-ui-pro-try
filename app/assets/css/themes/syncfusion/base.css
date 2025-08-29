@@ -1,0 +1,29 @@
+/* Syncfusion Base Theme Variables - Nuxt UI Compatible */
+
+:root {
+  /* Light Theme Colors */
+  --sf-bg-primary: rgb(255 255 255);
+  --sf-bg-secondary: rgb(248 250 252);
+  --sf-bg-tertiary: rgb(241 245 249);
+  --sf-text-primary: rgb(15 23 42);
+  --sf-text-secondary: rgb(51 65 85);
+  --sf-text-muted: rgb(100 116 139);
+  --sf-border-primary: rgb(226 232 240);
+  --sf-border-secondary: rgb(203 213 225);
+  --sf-hover-bg: rgb(241 245 249);
+  --sf-focus-bg: rgb(239 246 255);
+}
+
+.dark {
+  /* Dark Theme Colors - Matching Nuxt UI */
+  --sf-bg-primary: rgb(15 23 42);
+  --sf-bg-secondary: rgb(30 41 59);
+  --sf-bg-tertiary: rgb(20 30 48);
+  --sf-text-primary: rgb(248 250 252);
+  --sf-text-secondary: rgb(226 232 240);
+  --sf-text-muted: rgb(148 163 184);
+  --sf-border-primary: rgb(51 65 85);
+  --sf-border-secondary: rgb(71 85 105);
+  --sf-hover-bg: rgb(41 54 78);
+  --sf-focus-bg: rgb(30 58 138);
+}

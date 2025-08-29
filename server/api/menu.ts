@@ -147,6 +147,19 @@ const menuItems: MenuLink[] = [{
       status: 'active'
     }
   ]
+}, {
+  label: 'Syncfusion',
+  icon: 'i-heroicons-table-cells',
+  to: '/syncfusion',
+  status: 'active',
+  children: [
+    {
+      label: 'Grid',
+      icon: 'i-heroicons-squares-2x2',
+      to: '/syncfusion/grid',
+      status: 'active'
+    }
+  ]
 }]
 
 export default eventHandler(async () => {

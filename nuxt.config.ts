@@ -5,15 +5,17 @@ export default defineNuxtConfig({
   modules: ['@nuxt/ui-pro', '@pinia/nuxt'],
   css: [
     '~/assets/css/main.css',
-    '@syncfusion/ej2-base/styles/material.css',
-    '@syncfusion/ej2-buttons/styles/material.css',
-    '@syncfusion/ej2-calendars/styles/material.css',
-    '@syncfusion/ej2-dropdowns/styles/material.css',
-    '@syncfusion/ej2-inputs/styles/material.css',
-    '@syncfusion/ej2-navigations/styles/material.css',
-    '@syncfusion/ej2-popups/styles/material.css',
-    '@syncfusion/ej2-splitbuttons/styles/material.css',
-    '@syncfusion/ej2-vue-grids/styles/material.css'
+    '@syncfusion/ej2-base/styles/tailwind.css',
+    '@syncfusion/ej2-buttons/styles/tailwind.css',
+    '@syncfusion/ej2-calendars/styles/tailwind.css',
+    '@syncfusion/ej2-dropdowns/styles/tailwind.css',
+    '@syncfusion/ej2-inputs/styles/tailwind.css',
+    '@syncfusion/ej2-navigations/styles/tailwind.css',
+    '@syncfusion/ej2-popups/styles/tailwind.css',
+    '@syncfusion/ej2-splitbuttons/styles/tailwind.css',
+    '@syncfusion/ej2-vue-grids/styles/tailwind.css',
+    '@syncfusion/ej2-vue-dropdowns/styles/tailwind.css',
+    '@syncfusion/ej2-vue-popups/styles/tailwind.css'
   ],
   pinia: {
     storesDirs: ['./stores/**']
